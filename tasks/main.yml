@@ -1,0 +1,40 @@
+---
+- name: resolve platform specific vars
+  include_vars: '{{item}}'
+  with_first_found:
+    - files:
+        - '{{ansible_distribution}}-{{ansible_distribution_release}}.yml'
+        - '{{ansible_distribution}}.yml'
+        - '{{ansible_os_family}}.yml'
+      paths:
+        - '{{role_path}}/vars'
+
+- name: Enable 32 bit packages
+  become: yes
+  become_user: root
+  when: winehq_enable_32bit_arch
+  command: dpkg --add-architecture i386
+
+- name: Add apt key to trust apt repo
+  become: yes
+  become_user: root
+  apt_key:
+    url: '{{winehq_apt_key_url}}'
+    state: present
+
+- name: Add apt repo
+  become: yes
+  become_user: root
+  apt_repository:
+    repo: '{{winehq_apt_repo_url}}'
+    state: present
+
+- name: Install winehq packages
+  become: yes
+  become_user: root
+  with_items: '{{winehq_pkgs}}'
+  apt:
+    name: '{{item}}'
+    state: present
+    update_cache: yes
+    install_recommends: yes

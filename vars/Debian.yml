@@ -1,0 +1,2 @@
+---
+winehq_apt_repo_url: deb https://dl.winehq.org/wine-builds/debian/ {{ansible_distribution_release}} main
