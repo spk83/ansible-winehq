@@ -1,7 +1,7 @@
 ---
 winehq_enable_32bit_arch: True
 
-winehq_apt_key_url: https://dl.winehq.org/wine-builds/Release.key
+winehq_apt_key_url: https://dl.winehq.org/wine-builds/winehq.key
 
 winehq_pkgs:
   - winehq-stable

@@ -33,9 +33,8 @@
 - name: Install winehq packages
   become: yes
   become_user: root
-  with_items: '{{winehq_pkgs}}'
   apt:
-    name: '{{item}}'
+    name: '{{winehq_pkgs}}'
     state: present
     update_cache: yes
     install_recommends: yes
